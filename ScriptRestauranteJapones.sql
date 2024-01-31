@@ -1,4 +1,5 @@
 create database Bancotcc;
+
 use Bancotcc;
 
 create table funcionario (
@@ -8,9 +9,9 @@ create table funcionario (
 	senha_func varchar (15) NOT NULL,
     tipo_acesso bit not null,
     primary key (cod_func));
-    
-       		create table Endereco (
-	cod_endereco int  auto_increment,
+
+create table Endereco (
+	cod_endereco int auto_increment,
 	lodradouro varchar (40) NOT NULL,
 	numero varchar (10) NOT NULL,
 	complemento varchar (100),
@@ -18,8 +19,8 @@ create table funcionario (
 	estado varchar (20) NOT NULL,
 	cod_cliente int,
     primary key (cod_endereco));
-   
-   create table cliente (
+
+create table cliente (
 	cod_cliente int auto_increment,
 	nome_cliente varchar (60) NOT NULL,
 	telefone_cliente varchar (11) ,
@@ -28,9 +29,7 @@ create table funcionario (
     cod_endereco int,
     primary key (cod_cliente),
        foreign key (cod_endereco) references Endereco (cod_endereco));
-    
 
-    
 create table Produto(
 cod_Produto int auto_increment,
 valor double NOT NULL,
@@ -63,7 +62,6 @@ cod_cliente int,
        foreign key (cod_item) references Item (cod_item),
         foreign key (cod_cliente) references cliente (cod_cliente)
        );
-
 
 create table Reserva 
 (
@@ -107,8 +105,7 @@ foreign key (cod_Item) references Item (cod_Item),
 foreign key (cod_Produto) references Produto (cod_Produto),
 foreign key (cod_cliente) references cliente (cod_cliente)
 );
-
- DELIMITER $S
+DELIMITER $S
  create procedure InsertClienteeEndereco(
     IN cod_cliente int,
 	IN nome_cliente varchar (60),
@@ -124,19 +121,66 @@ foreign key (cod_cliente) references cliente (cod_cliente)
 
     
     BEGIN 
-    INSERT INTO cliente(cod_cliente,nome_cliente,telefone_cliente,email_cliente,senha_cliente)VALUES(cod_cliente,nome_cliente, telefone_cliente, email_cliente,senha_cliente);
-	INSERT INTO Endereco(cod_endereco,lodradouro,numero,complemento,cidade,estado)VALUES(cod_endereco,lodradouro,numero,complemento,cidade,estado);	
-    END $S
-CALL InsertClienteeEndereco(3,'madu','11956775689','madu@gmail.com','saddf2',3,
-'rua da baiota',450,'casa A','São Paulo', 'São Paulo');
-CALL InsertClienteeEndereco(4,'leticia','11956783790','lelinda@gmail.com','le12j',4,
-'qualquer rua do morro doce',24,'casa B','São Paulo', 'São Paulo');
-CALL InsertClienteeEndereco(5,'lucas','1195672289','lucas@gmail.com','l34kj12j',5,
-'rua das lagostas',10,'nenhum','Araçatuba', 'São Paulo');
-
-
-
-
+    INSERT
+	INTO
+	cliente(cod_cliente,
+	nome_cliente,
+	telefone_cliente,
+	email_cliente,
+	senha_cliente)
+VALUES(cod_cliente,
+nome_cliente,
+telefone_cliente,
+email_cliente,
+senha_cliente);
+	INSERT
+	INTO
+	Endereco(cod_endereco,
+	lodradouro,
+	numero,
+	complemento,
+	cidade,
+	estado)
+VALUES(cod_endereco,
+lodradouro,
+numero,
+complemento,
+cidade,
+estado);
+END $S
+CALL InsertClienteeEndereco(3,
+'madu',
+'11956775689',
+'madu@gmail.com',
+'saddf2',
+3,
+'rua da baiota',
+450,
+'casa A',
+'São Paulo',
+'São Paulo');
+CALL InsertClienteeEndereco(4,
+'leticia',
+'11956783790',
+'lelinda@gmail.com',
+'le12j',
+4,
+'qualquer rua do morro doce',
+24,
+'casa B',
+'São Paulo',
+'São Paulo');
+CALL InsertClienteeEndereco(5,
+'lucas',
+'1195672289',
+'lucas@gmail.com',
+'l34kj12j',
+5,
+'rua das lagostas',
+10,
+'nenhum',
+'Araçatuba',
+'São Paulo');
 DELIMITER $S
  create procedure ProdutoeItem(
     IN cod_Produto int,
@@ -151,10 +195,36 @@ DELIMITER $S
     
 BEGIN
 
-INSERT INTO Produto(cod_Produto,valor,Quantidade,Nome)VALUES(cod_Produto,valor,Quantidade,Nome);
-INSERT INTO Item(cod_item,valor_Item,Nome_Item)VALUES(cod_item,valor_Item,Nome_Item);	
-    END $S
-    CALL ProdutoeItem (2,'23', 2,'welliton',2,'2','temaki');
-    CALL ProdutoeItem(3,'30.90',3,'alex',3,'9.00','niguiri');
-    
-	
+INSERT
+	INTO
+	Produto(cod_Produto,
+	valor,
+	Quantidade,
+	Nome)
+VALUES(cod_Produto,
+valor,
+Quantidade,
+Nome);
+INSERT
+	INTO
+	Item(cod_item,
+	valor_Item,
+	Nome_Item)
+VALUES(cod_item,
+valor_Item,
+Nome_Item);
+END $S
+    CALL ProdutoeItem (2,
+'23',
+2,
+'welliton',
+2,
+'2',
+'temaki');
+    CALL ProdutoeItem(3,
+'30.90',
+3,
+'alex',
+3,
+'9.00',
+'niguiri');
